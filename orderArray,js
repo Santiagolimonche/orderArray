@@ -1,0 +1,38 @@
+// Array que debemos ordenar por número de repeteciones
+const frutas = ['Pera', 'Naranja', 'Naranja', 'Platano', 'Pera', 'Melón', 'Pera', 'Platano', 'Pera', 'Melón', 'Pera', 'Sandia', 'Fresa', 'Pera', 'Piña'];
+
+// Se recorre todo el array para ordenar por la cantidad de veces que se encuentra cada elemento creando parejas.
+// Es decir, (x, 2), (y, 7), (z, 1) siendo el primero el elemento y el segundo el número de veces que se repite.
+function countSepareElements(elements) {
+    return elements.reduce((b,c)=>((b[b.findIndex(d=>d.fruit===c)]||b[b.push({fruit:c,count:0})-1]).count++,b),[])
+}
+
+// Callback para ordenar de mayor a menor por los elementos encontrados por el atributo count
+function sortByCount( a, b ) {
+    if ( a.count > b.count ){
+        return -1
+    }
+    if ( a.count < b.count ){
+        return 1
+    }
+    return 0
+}
+
+/*
+    Función que se encarga de todo el proceso de ordenación del array.
+    La longitud por defecto que devuelve son los 5 primeros valores.
+*/
+function sortArraybyCount(arrOrd, max = 5) {
+    var elementsSort = countSepareElements(arrOrd).sort(sortByCount)
+    var elOrd = []
+    var i = 0
+    // Vamos añadiendo los elementos ya ordenados de mayor a menor ya con su elemento asociado
+    while ( i < max && typeof elementsSort[i] !== 'undefined' ) {
+        elOrd.push(elementsSort[i])
+        i++
+    }
+    return elOrd
+}
+
+// Mostramos el resultado de ordenar el array y limitar a cinco
+console.log(sortArraybyCount(frutas))
